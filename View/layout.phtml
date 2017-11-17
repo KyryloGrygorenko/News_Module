@@ -1,0 +1,227 @@
+
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <link rel="icon" href="../../favicon.ico">
+
+      <link href="/css/jquery.bxslider.css" rel="stylesheet" />
+      <link href="/css/bootstrap.min.css" rel="stylesheet">
+      <link href="/css/style.css" rel="stylesheet">
+      <link href="/css/window_close.css" rel="stylesheet">
+      <link href="//cdnjs.cloudflare.com/ajax/libs/select2/4.0.0/css/select2.min.css" rel="stylesheet" />
+
+      <title>TrueNews</title>
+  </head>
+
+  <body>
+
+  <div class="modalInner">
+      <section class="offer">
+          <h2>Подпишитесь на новостную рассылку с доступом к аналитике</h2>
+          <p>
+          <form method='post'>
+              <input type="name" name="name" value="Имя, Фамилия"/ >
+              <input type="email" name="email" value="Ваш имейл"/>
+              <input type="submit" value="Submit"/>
+          </form>
+          </p>
+      </section>
+  </div>
+<?php //$color='orange';?>
+<?php //$color='orange';?>
+<?php //$color='orange';?>
+<?php $color='black';?>
+    <nav id="header" class="navbar navbar-inverse" style="background-color:<?=$color?>;">
+      <div class="container" >
+         <div class="navbar-header clearboth">
+             <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+               <span class="sr-only">Toggle navigation</span>
+               <span class="icon-bar"></span>
+               <span class="icon-bar"></span>
+               <span class="icon-bar"></span>
+             </button>
+         </div>
+        <div id="navbar" class="collapse navbar-collapse" style="background-color:<?=$color?>;"">
+          <ul class="nav navbar-nav" style="background-color:<?=$color?>;"">
+              <?php foreach($categories_names as $categories_name):
+                  $category_num= isset($category_num)?$category_num:1;?>
+                  <li>
+                      <div class="navbar-collapse  navbar-inverse" style="background-color:<?=$color?>;" >
+                          <ul >
+                              <li ><a href="/politics?category_id=<?=$category_num?>"><?=$categories_name?></li></a>
+                              <?php foreach ($category_articles[$category_num] as $category_article) : ?>
+                                  <li id="custom_li"><a href="/politics/articles/?article_id=<?=$category_article->getId();?>&amp;category_id=<?=$category_num?>"><?=$category_article->getTitle();?></a></li>
+                              <?php endforeach;?>
+                          </ul>
+                      </>
+                  </li>
+                  <?php $category_num=$category_num+1;?>
+              <?php endforeach;?>
+                  <li>
+                      <div class="navbar-collapse  navbar-inverse" style="background-color:<?=$color?>;" >
+                          <ul >
+                              <li ><a href="#">Top 5 Feedbackers</li></a>
+                              <?php foreach ($top5FeedbackAuthors as $FeedbackAuthor) : ?>
+                                  <li id="custom_li"><a href="/feedbacker/?user_id=<?=$FeedbackAuthor->getUserId();?>"><?=$FeedbackAuthor->getUserName().' '.$FeedbackAuthor->getFeedbackCount()?></a></li>
+                              <?php endforeach;?>
+                          </ul>
+                      </>
+                  </li>
+
+                  <li>
+                      <div class="navbar-collapse  navbar-inverse" style="background-color:<?=$color?>;" >
+                          <ul >
+                              <li ><a href="#">Top Articles</li></a>
+                              <?php foreach ($topArticles as $topArticle) : ?>
+                                  <li id="custom_li"><a href="/politics/articles/?article_id=<?=$topArticle->getId();?>&amp;category_id=<?=$topArticle->getCategoryId()?>"><?=$topArticle->getTitle()?></a></li>
+                              <?php endforeach;?>
+                          </ul>
+                      </>
+                  </li>
+
+                <li>
+                    <div class="dropdown">
+                          <a id="dLabel" role="button" data-toggle="dropdown" class="btn btn-primary" data-target="#" href="#">
+                              Dropdown <span class="caret"></span>
+                          </a>
+                          <ul class="dropdown-menu multi-level" role="menu" aria-labelledby="dropdownMenu">
+                              <li><a class="dropdown-item" href="/analytics">Analytics</a></li>
+                              <li> <a class="dropdown-item" href="/article_filter/">Article Filter</a></li>
+                              <li class="divider"></li>
+                              <li class="dropdown-submenu">
+                                  <a tabindex="-1" href="#">more</a>
+                                  <ul class="dropdown-menu">
+                                      <li><a tabindex="-1" href="#">Second level</a></li>
+                                      <li class="dropdown-submenu">
+                                          <a href="#">Even More..</a>
+                                          <ul class="dropdown-menu">
+                                              <li><a href="#">3rd level</a></li>
+                                              <li><a href="#">3rd level</a></li>
+                                          </ul>
+                                      </li>
+                                      <li><a href="#">Second level</a></li>
+                                      <li><a href="#">Second level</a></li>
+                                  </ul>
+                              </li>
+                          </ul>
+                      </div>
+                </li>
+                <li  ><a href="/" class="glyphicon glyphicon-home"> Home</a></li>
+
+                        <?php if (\Library\Session::has('user')) : ?>
+                            <br><br>
+                            <li><a href="/logout">Logout (<?=\Library\Session::get('user')?>)</a></li>
+                        <?php else: ?>
+                            <br><br>
+                            <li><a href="/login">Login</a></li>
+                        <?php endif ?>
+          </ul>
+        </div><!--/.nav-collapse -->
+      </div>
+
+            <div>
+                <form method='post'>
+                    <select class="form-control" name="search">
+                        <option value="" disabled>Tag</option>
+                        <?php foreach ($all_tags as $tag):?>
+                            <option value="<?=$tag?>"  ><?=$tag?></option>
+                        <?php endforeach;?>
+                    </select>
+                    <p><input type="submit" value="search by #Tag"></p>
+                </form>
+            </div>
+
+       </div>
+    </nav>
+
+
+<!--  <div class="container">-->
+<!--        <div class="starter-template">-->
+<!--            --><?//=\Library\Session::getFlash()?>
+<!--            --><?//=$content ?>
+<!--        </div>-->
+<!--  </div>-->
+
+  <div class="container">
+      <div class="row">
+          <div class="col-sm-1">
+              <div class="col-sm-12" style="background-color:#cad4ce; min-height: 250px; min-width: 90px">
+                  <a id="add-left-top" href="#">Цена 1500грн</a>
+              </div>
+              <div class="col-sm-12" style="background-color:#acbdb5;min-height: 250px; min-width: 90px">
+                  <a id="add-left-bottom" href="#">Цена 1500грн</a>
+              </div>
+          </div>
+
+          <div class="col-sm-10 starter-template">
+                          <?=\Library\Session::getFlash()?>
+                          <?=$content ?>
+          </div>
+          <div class="col-sm-1" >
+              <div class="col-sm-12" style="background-color:#cad4ce; min-height: 250px; min-width: 150px">
+                  <a id="add-right-top" href="#">Цена 1500грн</a>
+              </div>
+              <div class="col-sm-12" style="background-color:#acbdb5;min-height: 250px; min-width: 150px">
+                  <a id="add-right-bottom" href="#">Цена 1500грн</a>
+              </div>
+          </div>
+      </div>
+  </div>
+
+  <div class="exitblock">
+      <div class="fon"></div>
+      <div class="modaltext">
+          Вы действительно хотите покинуть сайт?
+      </div>
+      <div class="closeblock">+</div>
+  </div>
+
+
+
+
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.2/jquery.min.js"></script>
+  <script src="/js/advertise.js"></script>
+
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.2/jquery.min.js"></script>
+
+<!--  //Offer to sign up for subscription _START_-->
+   <link rel="stylesheet" href="libs/arcticmodal/jquery.arcticmodal.css">
+  <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
+  <script src="//yandex.st/jquery/cookie/1.0/jquery.cookie.min.js"></script>
+  <script src="libs/arcticmodal/config.js"></script>
+  <script src="libs/arcticmodal/jquery.arcticmodal.js"></script>
+<!--  //Offer to sign up for subscription _END_-->
+
+<!--  //Confirmation on attempt to leave the site _START_-->
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.8.2/jquery.min.js"></script>
+  <script src="/js/jquery.bxslider.js"></script>
+  <script src="/js/custom.js"></script>
+  <script src="/js/onclose.js"></script>
+    <!--  <script src="/js/onclose2.js"></script>-->
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+<!--  //Confirmation on attempt to leave the site _END_-->
+
+  <script src="libs/arcticmodal/jquery.arcticmodal.js"></script>
+  <link rel="stylesheet" href="libs/arcticmodal/jquery.arcticmodal.css">
+  <link rel="stylesheet" href="libs/arcticmodal/themes/simple.css">
+  <script src="//yandex.st/jquery/cookie/1.0/jquery.cookie.min.js"></script>
+  <script src="libs/arcticmodal/config.js"></script>
+  <script>window.jQuery || document.write('<script src="../../assets/js/vendor/jquery.min.js"><\/script>')</script>
+  <script src="/js/bootstrap.min.js"></script>
+  <script src="//cdnjs.cloudflare.com/ajax/libs/select2/4.0.0/js/select2.min.js"></script>
+
+  <script>
+      $('select').select2();
+  </script>
+
+  </body>
+</html>
+
+

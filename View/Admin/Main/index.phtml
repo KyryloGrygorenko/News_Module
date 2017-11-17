@@ -1,0 +1,43 @@
+
+
+
+
+<table class="table table-striped books-list-table" style="margin: 50px auto; padding: 10px;">
+    <thead>
+    <tr>
+        <th>Category name</th>
+        <th>Actions</th>
+    </tr>
+    </thead>
+    <tbody>
+    <?php foreach ($categories_names as $categories_name) : ?>
+        <tr>
+            <td><?=$categories_name?></td>
+            <td>
+<!--                <button class="btn btn-success btn-sm" aria-label="Left Align">-->
+<!--                  <span class="glyphicon glyphicon-pencil" aria-hidden="true">-->
+<!--                </button>-->
+            <form method="post">
+                <button type="submit" class="btn btn-danger btn-sm" aria-label="Left Align" name="delete" value="<?=$categories_name?>">
+                  <span class="glyphicon glyphicon-trash" aria-hidden="true">
+                </button>
+            </form>
+
+
+            </td>
+
+        </tr>
+    <?php endforeach ?>
+    <tr>
+        <td>
+            <div class="row">add new category:
+                <form method='post'>
+                    <input type="text" name="category_name" value=""/ >
+                    <input type="submit" value="Add"/>
+                </form>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+  

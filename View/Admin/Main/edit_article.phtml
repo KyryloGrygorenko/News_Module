@@ -1,0 +1,48 @@
+
+
+<div class="row" style="margin-top: 50px">
+    <a href="/admin/add_article" style="color: white"><button class="btn btn-success btn-sm" aria-label="Left Align" style="color: white">Add new article</button></a>
+</div>
+
+<table class="table table-striped books-list-table" style="margin: 50px auto; padding: 10px;">
+
+    <thead>
+    <tr>
+        <th>Article title</th>
+        <th>Tags</th>
+        <th>Img</th>
+        <th>Actions</th>
+    </tr>
+    </thead>
+    <tbody>
+        <?php foreach ($articles as $article) : ?>
+            <tr>
+                <td><?=$article->getTitle()?></td>
+                <td><?=$article->getTags()?></td>
+                <td><?=$article->getImg()?></td>
+            </tr>
+            <tr>
+                <form method='post'>
+                    <td><input type="text" name="article_title" value=""  class="form-control"/></td>
+                    <td><input type="text" name="article_tags" value="" class="form-control"/></td>
+                    <td><select class="form-control" name="img" value="">
+                            <?php for($i=1;$i<=25;$i++):?>
+                                <option><?=$i?></option>
+                            <?php endfor;?>
+                        </select>
+                    </td>
+                    <input name="id" type="hidden"  value="<?=$article->getId()?>">
+                    <td>
+                        <form method="post">
+                            <button type="submit" class="btn btn-success btn-sm" aria-label="Left Align">
+                             <span class="glyphicon glyphicon-pencil" aria-hidden="true">CHANGE </span>
+                            </button>
+
+                        </form>
+                    </td>
+                </form>
+            </tr>
+        <?php endforeach ?>
+    </tbody>
+</table>
+

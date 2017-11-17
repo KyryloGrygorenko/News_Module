@@ -1,0 +1,51 @@
+
+<div class="container.slider ">
+
+    <div class="starter-template">
+
+        <div style="margin: 20px auto; max-width: 1000px; ">
+            <ul class="bxslider">
+
+                <?php foreach ($latest_articles as $latest_article) : ?>
+
+                    <li>
+                        <div>
+                            <?php if(file_exists(WEBROOT .'img/' .$latest_article->getCategoryId(). DS . $latest_article->getImg() . '.jpg' )){ ?>
+                                <img src="/img/<?=$latest_article->getCategoryId(). DS?><?=$latest_article->getImg();?>.jpg" alt="">
+                            <?php } elseif(file_exists(WEBROOT .'img/' .$latest_article->getCategoryId(). DS  . $latest_article->getImg() . '.jpeg' )){ ?>
+                                <img src="/img/<?=$latest_article->getCategoryId(). DS?><?=$latest_article->getImg();?>.jpeg" alt="">
+                            <?php } else{?>
+                                <img src="/img/<?=$latest_article->getCategoryId(). DS?>default.jpg" alt="">
+                                <img src="/img/<?=$latest_article->getCategoryId(). DS?>default.jpeg" alt="">
+                            <?php } ?>
+                        </div>
+
+                        <div><h3><?=$latest_article->getTitle()?></h3></div>
+                        <a class="btn btn-primary" href="/politics/articles/?article_id=<?=$latest_article->getId()?>&amp;category_id=<?=$latest_article->getCategoryId()?>">Read</a>
+                    </li>
+                <?php endforeach;?>
+            </ul>
+        </div>
+
+        <!--<h1>Bootstrap starter template</h1>-->
+        <!--<p class="lead">Use this document as a way to quickly start any new project.<br> All you get is this text and a mostly barebones HTML document.</p>-->
+    </div>
+
+</div><!-- /.container -->
+<script>
+    
+    
+    // $.post('/testajax.php', {name: 'Mike', age: 25})
+    //     .success(function(body) {
+    //         console.log('success', body);
+    //     }) 
+    //     .fail(function(res) {
+    //         console.log('fail', res.responseText);
+    //     })
+    //     .always(function() {
+    //         console.log('always');
+    //     });
+    
+   
+    
+</script>
